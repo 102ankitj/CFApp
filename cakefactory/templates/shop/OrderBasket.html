@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Basket{% endblock %}
+
+{% block content %}
+    <h2 xmlns="http://www.w3.org/1999/html">Basket</h2>
+
+        Customer: {{ order.customer }} <br>
+        Address:  {{ order.address }} <br>
+
+        Cakes in basket: <br>
+        <ul>
+            {% for orderitem in order.items.all %}
+                <li>{{ orderitem.product }}: {{ orderitem.quantity }}</li>
+            {% endfor %}
+        </ul>
+{% endblock %}
