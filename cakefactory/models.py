@@ -24,7 +24,7 @@ class OrderItem(models.Model):
 
     @property
     def price(self):
-        return self.product.price*self.quantity
+        return self.product.get_price()*self.quantity
 
 
 class Order(models.Model):

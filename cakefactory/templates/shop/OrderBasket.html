@@ -12,12 +12,12 @@
     <ul class="list-group">
 
         {% for orderitem in order.items.all %}
-            <li class="list-group-item">{{ orderitem.product }}": {{ orderitem.quantity }}</li>
+            <li class="list-group-item">{{ orderitem.product.name }}: {{ orderitem.quantity }} for {{ orderitem.price }}$ ({{ orderitem.product.price }}$ each)</li>
         {% endfor %}
 
     </ul>
 
-    <h3>Total Price:  {{ order.price }} </h3>
+    <h3>Total Price:  {{ order.price }}$ </h3>
     <hr>
 
     <form method="post" class="form" role="form">{% csrf_token %}

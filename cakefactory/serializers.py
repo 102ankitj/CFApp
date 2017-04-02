@@ -1,11 +1,10 @@
 # encoding: utf-8
 
 from django.contrib.auth.models import User
-from rest_framework import routers, serializers, viewsets
+from rest_framework import serializers, viewsets
 from rest_framework.decorators import permission_classes
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAdminUser
 from .models import Cake, Ingredient, Order, OrderItem
-from rest_framework import permissions
 
 ##############################################################################
 
@@ -46,7 +45,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class IngredientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Ingredient
-        fields = ('name', 'price')
+        fields = ('url', 'id', 'name', 'price')
 
 # ViewSets define the view behavior.
 class IngredientViewSet(viewsets.ModelViewSet):
@@ -71,7 +70,7 @@ class CakeSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Cake
-        fields = ('id', 'name', 'price', 'weight', 'ingredients')
+        fields = ('url', 'id', 'name', 'price', 'weight', 'ingredients')
 
 # ViewSets define the view behavior.
 class CakeViewSet(viewsets.ModelViewSet):
@@ -97,7 +96,7 @@ class OrderItemSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = OrderItem
-        fields = ('id', 'related_order', 'product', 'quantity')
+        fields = ('url', 'id', 'related_order', 'product', 'quantity')
 
 # ViewSets define the view behavior.
 @permission_classes((IsAdminUser, ))
@@ -125,7 +124,7 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Order
-        fields = ('id', 'address', 'customer', 'current', 'items')
+        fields = ('url', 'id', 'address', 'customer', 'current', 'items')
 
 # ViewSets define the view behavior.
 @permission_classes((IsAdminUser, ))

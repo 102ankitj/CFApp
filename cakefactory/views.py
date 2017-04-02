@@ -17,16 +17,17 @@ def registration_view(request):
 
     if request.method=="POST":
         form = RegistrationForm(request.POST)
+        print (request.POST)
         if form.is_valid():
             User.objects.create_user(
-                    username=request.POST['username'],
-                    password=request.POST['password'],
-                    email=request.POST['email'],
-                    first_name=request.POST['firstname'],
-                    last_name=request.POST['lastname'],
+                    username=form.cleaned_data.get('username'),
+                    password=form.cleaned_data.get('password'),
+                    email=form.cleaned_data.get('email'),
+                    first_name=form.cleaned_data.get('firstname'),
+                    last_name=form.cleaned_data.get('lastname'),
                     )
             return render(request,
-                          'registration/registration_completed.html',)
+                          'registration/registration_completed.html')
 
     else:
         form = RegistrationForm()
@@ -49,7 +50,7 @@ class CakeDetailView(DetailView):
     template_name = "shop/CakeDetail.html"
     form_class = AddCakeForm
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, **kwargs):
         form = self.form_class(initial={'cakeid': self.kwargs['pk']})
         cake = Cake.objects.get(id=self.kwargs['pk'])
 
@@ -75,9 +76,9 @@ class CakeDetailView(DetailView):
         return render(request, self.template_name, {'form': form})
 
 
-    def get_context_data(self, **kwargs):
-        context = super(CakeDetailView, self).get_context_data(**kwargs)
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super(CakeDetailView, self).get_context_data(**kwargs)
+    #     return context
 
 
 @method_decorator(login_required, name='dispatch')
