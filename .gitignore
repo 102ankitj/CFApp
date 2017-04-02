@@ -1,3 +1,4 @@
 /.idea
+/collected_static
 *.pyc
 db.sqlite3
