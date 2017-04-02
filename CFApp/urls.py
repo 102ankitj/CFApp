@@ -32,6 +32,9 @@ router.register(r'orders', OrderViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+
+    url(r'^accounts/login/$', auth_views.login, name='login'),
+    url(r'^accounts/logout/$', auth_views.logout, name='logout'),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^signup/$', registration_view, name='registration'),
@@ -46,4 +49,5 @@ urlpatterns = [
     # url(r'^addcake/(?P<pk>\d+)$', CakeDetailView.as_view(template_name="shop/CakeDetail.html"), name='add-to-cart'),
 
     url(r'^basket/$', OrderView.as_view(template_name="shop/OrderBasket.html"), name='basket'),
+    url(r'^thx/$', CakeListView.as_view(template_name="shop/thx.html"), name='thx'),
 ]

@@ -5,13 +5,30 @@
 {% block content %}
     <h2 xmlns="http://www.w3.org/1999/html">Basket</h2>
 
-        Customer: {{ order.customer }} <br>
-        Address:  {{ order.address }} <br>
+    Customer: {{ order.customer }} <br>
+    Address:  {{ order.address }} <br>
 
-        Cakes in basket: <br>
-        <ul>
-            {% for orderitem in order.items.all %}
-                <li>{{ orderitem.product }}: {{ orderitem.quantity }}</li>
-            {% endfor %}
-        </ul>
+    Cakes in basket: <br>
+    <ul>
+        {% for orderitem in order.items.all %}
+            <li>{{ orderitem.product }}: {{ orderitem.quantity }}</li>
+        {% endfor %}
+    </ul>
+
+    <form method="post" class="form" role="form">{% csrf_token %}
+{#        <div class="form-group">#}
+{#            {{ form.orderid.as_hidden }}#}
+{#        </div>#}
+
+
+        <div class="form-group">
+            <label for="quantity">Address</label>
+            {{ form.address.errors }}
+            {{ form.address }}
+        </div>
+
+    <button type="submit" class="btn btn-default">BUY</button>
+    </form>
+
+
 {% endblock %}

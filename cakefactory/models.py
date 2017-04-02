@@ -28,8 +28,8 @@ class Order(models.Model):
     customer = models.ForeignKey(User)
     current = models.BooleanField(default=True)
 
-    class Meta:
-        unique_together = ('customer', 'current',)
+    # class Meta:
+    #     unique_together = ('customer', 'current',)
 
 
 class Ingredient(models.Model):

@@ -2,6 +2,8 @@
 
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from .models import Cake, Ingredient, Order, OrderItem
 from rest_framework import permissions
 
@@ -23,6 +25,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'username', 'email', 'is_staff')
 
 # ViewSets define the view behavior.
+@permission_classes((IsAdminUser, ))
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -97,6 +100,7 @@ class OrderItemSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'related_order', 'product', 'quantity')
 
 # ViewSets define the view behavior.
+@permission_classes((IsAdminUser, ))
 class OrderItemViewSet(viewsets.ModelViewSet):
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
@@ -124,6 +128,7 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'address', 'customer', 'current', 'items')
 
 # ViewSets define the view behavior.
+@permission_classes((IsAdminUser, ))
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer

@@ -3,10 +3,13 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 
-from cakefactory.forms import RegistrationForm, AddCakeForm
+from cakefactory.forms import RegistrationForm, AddCakeForm, BasketForm
 from django.contrib.auth.models import User
 from django.views.generic import TemplateView, DetailView, View
 from django.views.generic import ListView
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from cakefactory.models import Cake, Order, OrderItem, Ingredient
 
@@ -34,13 +37,13 @@ def registration_view(request):
                   RequestContext(request))
 
 
-
+@method_decorator(login_required, name='dispatch')
 class CakeListView(ListView):
     model = Cake
     template_name = "shop/CakeList.html"
 
 
-
+@method_decorator(login_required, name='dispatch')
 class CakeDetailView(DetailView):
     model = Cake
     template_name = "shop/CakeDetail.html"
@@ -48,16 +51,12 @@ class CakeDetailView(DetailView):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class(initial={'cakeid': self.kwargs['pk']})
-        # print (Cake.objects.get(kwargs['pk']).ingredients.all())
         cake = Cake.objects.get(id=self.kwargs['pk'])
 
         return render(request, self.template_name, {'form': form, 'cake': cake})
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
-        # print(form.cakeid)
-        # print(form.quantity)
-        print (request.POST)
         if form.is_valid():
             order, order_created = Order.objects.get_or_create(customer=request.user, current=True)
 
@@ -78,10 +77,6 @@ class CakeDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(CakeDetailView, self).get_context_data(**kwargs)
-        # # context.update({
-        # #     'form': self.form
-        # # })
-        # context['form'] = self.form
         return context
 
 
@@ -89,44 +84,35 @@ class CakeDetailView(DetailView):
 class OrderView(DetailView):
     model = Order
     template_name = "shop/OrderBasket.html"
+    form_class = BasketForm
 
     def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        order, created = Order.objects.get_or_create(customer=request.user, current=True)
 
-        order = Order.objects.get(customer=request.user, current=True)
+        return render(request, self.template_name, {'form': form, 'order': order})
 
-        return render(request, self.template_name, {'order': order})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        print (request.POST)
+        if form.is_valid():
+
+            order = Order.objects.get(customer=request.user, current=True)
+            order.address = form.cleaned_data.get('address')
+            order.current = False
+            order.save()
+
+            return HttpResponseRedirect('/thx/')
+
+        return render(request, self.template_name, {'form': form})
+
 
     def get_context_data(self, **kwargs):
         context = super(OrderView, self).get_context_data(**kwargs)
         return context
 
 
-
-
-class OrderDetailView(DetailView):
-    pass
-
-# class CakeAddView(DetailView):
-#     model = Cake
-#     template_name = "shop/CakeDetail.html"
-#
-#     def get_context_data(self, **kwargs):
-#         context = super(CakeDetailView, self).get_context_data(**kwargs)
-#         return context
-
-#
-# class CakeAddView(View):
-#     form_class = AddCakeForm
-#     # initial = {'key': 'value'}
-#     # template_name = 'form_template.html'
-#
-#     # def get(self, request, *args, **kwargs):
-#     #     form = self.form_class(initial=self.initial)
-#     #     return render(request, self.template_name, {'form': form})
-#
-#     def post(self, request, *args, **kwargs):
-#         form = self.form_class(request.POST)
-#         if form.is_valid():
-#             return HttpResponseRedirect('/success/')
-#
-#         return render(request, self.template_name, {'form': form})
+class ThxView(DetailView):
+    model = Order
+    template_name = "shop/thx.html"

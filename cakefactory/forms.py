@@ -34,7 +34,7 @@ class RegistrationForm(forms.Form):
         password2 = self.cleaned_data.get('password2')
 
         if not(password == password2):
-            self.errors['password']=ErrorList([u"Password != Password2"])
+            self.errors['password']=ErrorList([u"Passwords are not the same"])
 
         try:
             if not User.objects.get(username=username)==None:
@@ -59,3 +59,10 @@ class AddCakeForm(forms.Form):
     quantity = forms.IntegerField(min_value=1)
 
     quantity.widget.attrs.update({'class': 'form-control'})
+
+
+class BasketForm(forms.Form):
+    # orderid = forms.IntegerField()
+    address = forms.CharField()
+
+    address.widget.attrs.update({'class': 'form-control'})
