@@ -1,2 +1,0 @@
-# CFApp
-Cake Factory App
