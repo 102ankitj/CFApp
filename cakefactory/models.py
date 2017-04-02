@@ -1,3 +1,4 @@
+from builtins import property
 from django.db import models
 from django.contrib.auth.models import User
 from .mixins import PriceableMixin
@@ -21,6 +22,10 @@ class OrderItem(models.Model):
     def __str__(self):
         return "{0}: {1}".format(self.product, self.quantity)
 
+    @property
+    def price(self):
+        return self.product.price*self.quantity
+
 
 class Order(models.Model):
     items = models.ManyToManyField('OrderItem')
@@ -30,6 +35,14 @@ class Order(models.Model):
 
     # class Meta:
     #     unique_together = ('customer', 'current',)
+
+    @property
+    def price(self):
+        sum = 0
+        for oi in self.items.all():
+            sum += oi.price
+
+        return sum
 
 
 class Ingredient(models.Model, PriceableMixin):
