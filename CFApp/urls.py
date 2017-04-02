@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from rest_framework import routers
 
-from cakefactory.views import registration_view, CakeListView, CakeDetailView, OrderView
+from cakefactory.views import registration_view, CakeListView, CakeDetailView, OrderView, homepage_view
 from cakefactory.serializers import UserViewSet, CakeViewSet, IngredientViewSet, OrderItemViewSet, OrderViewSet
 
 
@@ -41,6 +41,9 @@ urlpatterns = [
 
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/', include(router.urls)),
+
+    url(r'^home/$', homepage_view, name='homepage'),
+    url(r'^accounts/profile/$', homepage_view, name='homepage'),
 
     url(r'^$', CakeListView.as_view(template_name="shop/CakeList.html"), name='root'),
     url(r'^cakes/$', CakeListView.as_view(template_name="shop/CakeList.html"), name='cakelist'),

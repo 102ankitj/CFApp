@@ -4,9 +4,13 @@
 
 {% block content %}
     <h2>Cake Choices</h2>
-    <ul>
+
+
+    <ul class="list-group">
+
         {% for cake in object_list %}
-            <li><a href="{% url 'cake-details' cake.id %}">{{ cake.name }}: {{ cake.price }} $</a></li>
+            <li class="list-group-item"><a href="{% url 'cake-details' cake.id %}">{{ cake.name }}: {{ cake.price }} $</a></li>
         {% endfor %}
+
     </ul>
 {% endblock %}

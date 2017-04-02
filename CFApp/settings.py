@@ -125,6 +125,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = ()
+STATICFILES_DIRS += (os.path.join(BASE_DIR, 'static'), '/home/diagon/Workspace/IDS/CFApp/static')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,

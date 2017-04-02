@@ -1,9 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from .mixins import PriceableMixin
 # Create your models here.
 
-class Cake(models.Model):
+class Cake(models.Model, PriceableMixin):
     name = models.CharField(max_length=255)
     price = models.IntegerField()
     weight = models.IntegerField(blank=True, null=True)
@@ -32,7 +32,7 @@ class Order(models.Model):
     #     unique_together = ('customer', 'current',)
 
 
-class Ingredient(models.Model):
+class Ingredient(models.Model, PriceableMixin):
     name = models.CharField(max_length=255)
     price = models.IntegerField()
 

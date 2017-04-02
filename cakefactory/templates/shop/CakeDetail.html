@@ -5,8 +5,10 @@
 {% block content %}
     <h2>Cake</h2>
 
-    <h4>{{ cake.name }}</h4>
-    {{ cake.price }}$
+    <h4>Name: {{ cake.name }}</h4>
+    Price: {{ cake.price }}$
+    <br>
+{#    Weight: {{ cake.weight }}#}
 
     <h4>Ingredients:</h4>
     <ul>
@@ -15,8 +17,6 @@
     {% endfor %}
     </ul>
 
-    <br>
-    <br>
 
     <form method="post" class="form" role="form">{% csrf_token %}
         <div class="form-group">

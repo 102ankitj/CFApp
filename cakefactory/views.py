@@ -80,7 +80,7 @@ class CakeDetailView(DetailView):
         return context
 
 
-
+@method_decorator(login_required, name='dispatch')
 class OrderView(DetailView):
     model = Order
     template_name = "shop/OrderBasket.html"
@@ -112,7 +112,11 @@ class OrderView(DetailView):
         context = super(OrderView, self).get_context_data(**kwargs)
         return context
 
-
+@method_decorator(login_required, name='dispatch')
 class ThxView(DetailView):
     model = Order
     template_name = "shop/thx.html"
+
+
+def homepage_view(request):
+    return render(request, 'homepage.html')
