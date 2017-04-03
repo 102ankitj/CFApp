@@ -1,4 +1,3 @@
 # CFApp
-Cake Factory App
-
-"Cake Factory App" implements web shop application for cakes sales.
+Cake Factory App is a web application meant for saling cakes online.
+The web application includes some webforms for the users to interact with, the forms included are User Registration form,
