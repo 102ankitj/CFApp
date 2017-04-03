@@ -1,4 +1,4 @@
-#Autogeerated file by Python
+# Autogeerated file by Python
 
 from django.apps import AppConfig
 

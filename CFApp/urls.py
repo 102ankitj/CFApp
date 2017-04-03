@@ -6,8 +6,8 @@ from django.contrib import admin					#Importing admin for the admin webpage
 from django.contrib.auth import views as auth_views	#Importing auth-views to restrict access only to authorised users
 from rest_framework import routers					#Routers provide an easy way of automatically determining the URL conf.
 
-from cakefactory.views import registration_view, CakeListView, CakeDetailView, OrderView, homepage_view, thx_view		#Importing views from views.py
-from cakefactory.serializers import UserViewSet, CakeViewSet, IngredientViewSet, OrderItemViewSet, OrderViewSet			#Importing ViewSets from serializers.py
+from cakefactory.views import registration_view, CakeListView, CakeDetailView, OrderView, homepage_view, thx_view, logout_view		#Importing views from views.py
+from cakefactory.serializers import UserViewSet, CakeViewSet, IngredientViewSet, OrderItemViewSet, OrderViewSet			            #Importing ViewSets from serializers.py
 
 #Registering all the viewsets on the router
 router = routers.DefaultRouter()					#Creating a router class object named router
@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^accounts/login/$', auth_views.login, name='login'),							#URL for login webpage
     url(r'^accounts/logout/$', auth_views.logout, name='logout'),						#URL for logout webpage
     url(r'^login/$', auth_views.login, name='login'),									#Another URL for login webpage
-    url(r'^logout/$', auth_views.logout, name='logout'),								#Another URL for logout webpage
+    url(r'^logout/$', logout_view, name='logout'),								#Another URL for logout webpage
     url(r'^signup/$', registration_view, name='registration'),							#URL for registration webpage
 
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),		#URL for API webpage
