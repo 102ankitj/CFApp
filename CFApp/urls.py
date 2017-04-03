@@ -1,24 +1,12 @@
-"""CFApp URL Configuration
+#Contains URL Configuration and defines urlpatterns list which routes URLs to views
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.10/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
-"""
+#Importing Libraries
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from rest_framework import routers
 
-from cakefactory.views import registration_view, CakeListView, CakeDetailView, OrderView, homepage_view
+from cakefactory.views import registration_view, CakeListView, CakeDetailView, OrderView, homepage_view, thx_view
 from cakefactory.serializers import UserViewSet, CakeViewSet, IngredientViewSet, OrderItemViewSet, OrderViewSet
 
 
@@ -49,8 +37,6 @@ urlpatterns = [
     url(r'^cakes/$', CakeListView.as_view(template_name="shop/CakeList.html"), name='cakelist'),
     url(r'^cake/(?P<pk>\d+)$', CakeDetailView.as_view(template_name="shop/CakeDetail.html"), name='cake-details'),
 
-    # url(r'^addcake/(?P<pk>\d+)$', CakeDetailView.as_view(template_name="shop/CakeDetail.html"), name='add-to-cart'),
-
     url(r'^basket/$', OrderView.as_view(template_name="shop/OrderBasket.html"), name='basket'),
-    url(r'^thx/$', CakeListView.as_view(template_name="shop/thx.html"), name='thx'),
+    url(r'^thx/$', thx_view, name='thx'),
 ]
