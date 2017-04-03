@@ -1,8 +1,8 @@
-#
+# Buisness-logic layer
+# Provides connection between Data (Models) and UI(Templates)
 
 # Importing Libraries
 from builtins import super
-
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.template import RequestContext
@@ -15,7 +15,7 @@ from django.contrib.auth import views as auth_views
 from cakefactory.forms import RegistrationForm, AddCakeForm, BasketForm
 from .models import Cake, Order, OrderItem
 
-
+# Populates and processes data from the registration webpage
 def registration_view(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
@@ -38,13 +38,13 @@ def registration_view(request):
                   {'form': form},
                   RequestContext(request))
 
-
+# Populates and processes data from the Cake List webpage
 @method_decorator(login_required, name='dispatch')
 class CakeListView(ListView):
     model = Cake
     template_name = "shop/CakeList.html"
 
-
+# Populates and processes data from the selected cake deatils webpage
 @method_decorator(login_required, name='dispatch')
 class CakeDetailView(DetailView):
     model = Cake
@@ -80,7 +80,7 @@ class CakeDetailView(DetailView):
         context = super(CakeDetailView, self).get_context_data(**kwargs)
         return context
 
-
+# Populates and processes data from the Basket webpage
 @method_decorator(login_required, name='dispatch')
 class OrderView(DetailView):
     model = Order
@@ -106,11 +106,11 @@ class OrderView(DetailView):
 
         return render(request, self.template_name, {'form': form})
 
-
+# Populates a webpage with Thank you message
 def thx_view(request):
     return render(request, 'shop/thx.html')
 
-
+# Populates a webpage with a welcome message
 def homepage_view(request):
     return render(request, 'homepage.html')
 
