@@ -1,3 +1,6 @@
 # CFApp
 Cake Factory App is a web application meant for saling cakes online.
-The web application includes some webforms for the users to interact with, the forms included are User Registration form,
+The web application includes some webforms for the users to interact with, the forms included are User Registration form,Add CakeForm and a basket form.Through the registration form user get an interface to sign up by putting in their details like username, password,confirm password, last name, first name and email address.Add cake form gives the user a functionality to customise their cake and make a selection and at last there is a basket form through which all the selections of the customers are added to the basket.
+In the construction of this website there are models which are a definitive source of information about the data. They contain the essential fields and behaviors of the data which has been stored. The models created are for cakes, Order item, orders and ingredients classes.
+Furthermore, In the backend the websit has Serializers that allow complex data such as querysets and model instances to be converted to native Python datatypes that can then be easily rendered into some other content types. The serialisers included are user, cake, order, order item, ingredients.Each of the serialiser included has a view set which define the view of the behaviour.
+The websit also have views which are nothing but the returning forms to the user.
