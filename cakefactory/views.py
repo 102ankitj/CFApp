@@ -1,23 +1,21 @@
+#
+
+#Importing Libraries
 from builtins import super
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render
 from django.template import RequestContext
-
 from cakefactory.forms import RegistrationForm, AddCakeForm, BasketForm
 from django.contrib.auth.models import User
-from django.views.generic import TemplateView, DetailView, View
-from django.views.generic import ListView
-from django.core.exceptions import ObjectDoesNotExist
+from django.views.generic import DetailView, ListView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-
-from cakefactory.models import Cake, Order, OrderItem, Ingredient
+from .models import Cake, Order, OrderItem, Ingredient
 
 def registration_view(request):
 
     if request.method=="POST":
         form = RegistrationForm(request.POST)
-        print (request.POST)
         if form.is_valid():
             User.objects.create_user(
                     username=form.cleaned_data.get('username'),
@@ -56,7 +54,7 @@ class CakeDetailView(DetailView):
 
         return render(request, self.template_name, {'form': form, 'cake': cake})
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
             order, order_created = Order.objects.get_or_create(customer=request.user, current=True)
@@ -75,12 +73,6 @@ class CakeDetailView(DetailView):
 
         return render(request, self.template_name, {'form': form})
 
-
-    # def get_context_data(self, **kwargs):
-    #     context = super(CakeDetailView, self).get_context_data(**kwargs)
-    #     return context
-
-
 @method_decorator(login_required, name='dispatch')
 class OrderView(DetailView):
     model = Order
@@ -96,7 +88,6 @@ class OrderView(DetailView):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
-        print (request.POST)
         if form.is_valid():
 
             order = Order.objects.get(customer=request.user, current=True)
@@ -108,16 +99,8 @@ class OrderView(DetailView):
 
         return render(request, self.template_name, {'form': form})
 
-
-    def get_context_data(self, **kwargs):
-        context = super(OrderView, self).get_context_data(**kwargs)
-        return context
-
-@method_decorator(login_required, name='dispatch')
-class ThxView(DetailView):
-    model = Order
-    template_name = "shop/thx.html"
-
+def thx_view(request):
+    return render(request, 'shop/thx.html')
 
 def homepage_view(request):
     return render(request, 'homepage.html')
