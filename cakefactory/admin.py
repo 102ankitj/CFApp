@@ -1,9 +1,11 @@
-from django.contrib import admin
-from cakefactory.models import Cake, Order, Ingredient, OrderItem
+#Admin webpage which allows administrator to add/remove/edit users, cakes, ingredients, orders, user permissions and restrictions.
 
-# Register your models here.
+#Importing Libraries
+from django.contrib import admin									#Import framework to automatically generate admin functions a/c to provided models
+from cakefactory.models import Cake, Order, Ingredient, OrderItem	#Import models defined in models.py
 
-admin.site.register(Cake)
-admin.site.register(Order)
-admin.site.register(OrderItem)
-admin.site.register(Ingredient)
+#Registering models to be displayed and modified from the admin page of the website
+admin.site.register(Cake)			#Register Cake model
+admin.site.register(Order)			#Register Order model
+admin.site.register(OrderItem)		#Register Order Item model
+admin.site.register(Ingredient)		#Register Ingredient model

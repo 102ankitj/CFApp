@@ -1,3 +1,5 @@
+#Autogeerated file by Python
+
 from django.apps import AppConfig
 
 
