@@ -2,7 +2,7 @@
 
 #Importing Libraries
 from django.contrib.auth.models import User					#Import User model from django models
-from rest_framework import serializers, viewsets			#Import serializer and viewsets for API and API user interface
+from rest_framework import serializers, viewsets			#Import serializer and viewsets for API and API interface
 from rest_framework.decorators import permission_classes	#Import permission class to allow or deny access to resources for different users
 from rest_framework.permissions import IsAdminUser			#Import to identify and set permissions as True for admin users
 from .models import Cake, Ingredient, Order, OrderItem		#Import models from models.py
